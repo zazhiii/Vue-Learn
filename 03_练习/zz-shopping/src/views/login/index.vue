@@ -1,40 +1,51 @@
 <script>
 import _axios from "@/utils/_axios";
+
 export default {
   name: 'LoginIndex',
-  async created () {
+  async created() {
     const res = await _axios.get('/captcha/image')
     console.log(res)
+  },
+  methods: {
+    async login() {
+      //   ...
+      const res = {data:{token: 'af929hf9', userId: 123123}}; // 假设登录成功后返回的用户信息
+      // 登录凭证存入vuex
+      this.$store.commit('user/setUserInfo', res.data);
+    }
   }
+
 }
 </script>
 
 <template>
-<div>
-  <van-nav-bar title="登录" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
-  <div class="container">
-    <div class="title">
-      <h3>手机号登录</h3>
-      <p>未注册的手机号登录后将自动注册</p>
-    </div>
+  <div>
+    <!-- 头部 -->
+    <van-nav-bar title="登录" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
+    <div class="container">
+      <div class="title">
+        <h3>手机号登录</h3>
+        <p>未注册的手机号登录后将自动注册</p>
+      </div>
 
-    <div class="form">
-      <div class="form-item">
-        <input class="inp" maxlength="11" placeholder="请输入手机号码" type="text">
+      <div class="form">
+        <div class="form-item">
+          <input class="inp" maxlength="11" placeholder="请输入手机号码" type="text">
+        </div>
+        <div class="form-item">
+          <input class="inp" maxlength="5" placeholder="请输入图形验证码" type="text">
+          <img src="@/assets/code.png" alt="">
+        </div>
+        <div class="form-item">
+          <input class="inp" placeholder="请输入短信验证码" type="text">
+          <button>获取验证码</button>
+        </div>
       </div>
-      <div class="form-item">
-        <input class="inp" maxlength="5" placeholder="请输入图形验证码" type="text">
-        <img src="@/assets/code.png" alt="">
-      </div>
-      <div class="form-item">
-        <input class="inp" placeholder="请输入短信验证码" type="text">
-        <button>获取验证码</button>
-      </div>
-    </div>
 
-    <div class="login-btn">登录</div>
+      <div class="login-btn">登录</div>
+    </div>
   </div>
-</div>
 </template>
 
 <style scoped>
@@ -43,10 +54,12 @@ export default {
 
   .title {
     margin-bottom: 20px;
+
     h3 {
       font-size: 26px;
       font-weight: normal;
     }
+
     p {
       line-height: 40px;
       font-size: 14px;
@@ -60,6 +73,7 @@ export default {
     margin-bottom: 14px;
     display: flex;
     align-items: center;
+
     .inp {
       display: block;
       border: none;
@@ -68,10 +82,12 @@ export default {
       font-size: 14px;
       flex: 1;
     }
+
     img {
       width: 94px;
       height: 31px;
     }
+
     button {
       height: 31px;
       border: none;
@@ -86,10 +102,10 @@ export default {
     width: 100%;
     height: 42px;
     margin-top: 39px;
-    background: linear-gradient(90deg,#ecb53c,#ff9211);
+    background: linear-gradient(90deg, #ecb53c, #ff9211);
     color: #fff;
     border-radius: 39px;
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,.1);
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, .1);
     letter-spacing: 2px;
     display: flex;
     justify-content: center;
